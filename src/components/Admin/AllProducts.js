@@ -7,24 +7,16 @@ import './AllProducts.css';
 
  
 const AllProducts = () => {
-
-  const [greeting, setGreeting] = useState("Hello functional component");
-  const [data, setData] = useState([]);
-  const [user, setUser] = useState({
-    id: '',
-    name: '',
-    username: '',
-    password: '',
-    occupation: '',
-    hobby: '',
-  })
-
+  const [status, setStatus] = useState("");
   
-  
+  useEffect(()=>{
+    setStatus(window.sessionStorage.getItem("admin"));
+  },[]);
   
  
   return (
     <div className="container">
+      <h1>Hello, <span> {status}</span></h1>
       <div className="space">
       <Link to="/allProductsForm" >Manage Products</Link>
         </div>

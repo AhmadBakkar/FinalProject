@@ -34,8 +34,41 @@ app.post("/login", (req, res) => {
 });
 
 //Display All Products
-app.get("/AllRecord", (req, res) => {
+app.get("/AllRecord", (req, res) => {   
+    const categoryName = req.body.type;
+    db.query(`SELECT * FROM laptops Union Select * From tablets`,(err, result) => {
+            res.send(result);
+    }
+    );
+});
+
+//Display for laptops menu
+app.get("/laptops", (req, res) => {
     db.query("SELECT * FROM laptops",  (err, result) => {
+            res.send(result);
+    }
+    );
+});
+
+//Display for laptops menu
+app.get("/categories", (req, res) => {
+    db.query("SELECT * FROM category_reference",  (err, result) => {
+            res.send(result);
+    }
+    );
+});
+
+//Display for tablets menu
+app.get("/tablets", (req, res) => {
+    db.query("SELECT * FROM tablets",  (err, result) => {
+            res.send(result);
+    }
+    );
+});
+
+//Display Data for the graph
+app.get("/Data", (req, res) => {
+    db.query("SELECT Description,Price FROM laptops UNION SELECT Description,Price FROM tablets",  (err, result) => {
             res.send(result);
     }
     );
@@ -49,8 +82,9 @@ app.post("/insert", (req, res) => {
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
+    const categoryName = req.body.categoryName;
 
-    db.query("INSERT INTO laptops (ImageSrc,Name,Description,Price) VALUES (?,?,?,?)", [image, name,description,price], (err, result) => {
+    db.query(`INSERT INTO ${categoryName} (ImageSrc,Name,Description,Price) VALUES ("${image}","${name}","${description}","${price}")`, (err, result) => {
         console.log(err);
         if (err) {
             res.send({ err: err })
@@ -68,8 +102,9 @@ app.post("/delete", (req, res) => {
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
+    const categoryName = req.body.categoryName;
 
-    db.query("DELETE FROM laptops WHERE id = ? and Name = ? ", [id, name], (err, result) => {
+    db.query(`DELETE FROM ${categoryName} WHERE id = "${id}" and Name = "${name}"`, (err, result) => {
         console.log(err);
         if (err) {
             res.send({ err: err })
@@ -86,8 +121,9 @@ app.post("/update", (req, res) => {
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
+    const categoryName = req.body.categoryName;
 
-    db.query("UPDATE laptops set ImageSrc = ? , Name = ? , Description = ?, Price = ? WHERE id = ?", [image, name,description,price,id], (err, result) => {
+    db.query(`UPDATE ${categoryName} set ImageSrc = ? , Name = ? , Description = ?, Price = ? WHERE id = ?`, [image, name,description,price,id], (err, result) => {
         console.log(err);
         if (err) {
             res.send({ err: err })

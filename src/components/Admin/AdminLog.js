@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import Axios from 'axios';
+import GoogleLogin from 'react-google-login'
+
 
 
 const AdminLog = () => {
@@ -12,7 +14,12 @@ const AdminLog = () => {
   
     const history = useHistory();
   
-    
+    const responseGoogle = (response)=>{
+      console.log(response);
+      console.log(response.profileObj);
+      
+      
+    }
   
     useEffect(()=>{
       setLoginStatus("")
@@ -25,13 +32,15 @@ const AdminLog = () => {
         username: usernameL,
         password: passwordL
       }).then((response) => {
-        
+        console.log(usernameL,passwordL);
         if(response.data.message){
           setLoginStatus(response.data.message)
         }else{
           history.push("/allProducts");
         }
       });
+
+      window.sessionStorage.setItem("admin",usernameL);
     }
   
     
@@ -49,6 +58,17 @@ const AdminLog = () => {
               <input type="password" name="PassWord"  onChange={(e) => { setPassword(e.target.value); }} />
             </div>
             <button onClick={login}>Login</button>
+            <div>
+
+            
+            <GoogleLogin 
+        clientId="272938971704-benahic2rpp2u04ncqe7ea0kp26g65ir.apps.googleusercontent.com"
+        buttonText="Login"
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}   
+        />
+        </div>
           </div>
           
             

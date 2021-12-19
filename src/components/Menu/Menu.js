@@ -24,6 +24,15 @@ const Menu = (props) => {
           <NavLink to='/Laptops' activeStyle>
             Laptops
           </NavLink>
+          <NavLink to='/ipads' activeStyle>
+            Tablets
+          </NavLink>
+          <NavLink to='/data' activeStyle>
+            Data Visualization
+          </NavLink>
+          <NavLink to='/Currency' activeStyle>
+            Currency
+          </NavLink>
           <NavLink to='/checkout' activeStyle>
           <ShoppingCartOutlined />
           </NavLink>

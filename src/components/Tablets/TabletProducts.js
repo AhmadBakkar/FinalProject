@@ -20,20 +20,15 @@ const Product  = (props) => {
   const [cartItems,setCartItems] = useState([]);
   const [price,setPrice] = useState(0);
   const dispatch = useDispatch();
-  
+
  console.log(cartItems)
 
 
  const history = useHistory();
 
-//I want to pass cartItems array to Cart Component
-
-
-
-
 
   const loadProducts = () => {
-    axios.get("http://localhost:3001/laptops", {
+    axios.get("http://localhost:3001/tablets", {
     }).then((res) => {
       console.log(res);
       setItems(res?.data);
@@ -46,10 +41,6 @@ const Product  = (props) => {
    */
    useEffect(()=>{
     loadProducts();
-    try{
-    if(localStorage.getItem("value" || 'null').length == 0){
-      dispatch({type:'RESET'})
-    }}catch(err){console.log(err)}
     
   },[]);
 
@@ -70,7 +61,7 @@ const Product  = (props) => {
           <input style={{ height: 40, width: 300 }} type="text" placeholder="Search" name="Search" onChange={(e) => { setSearch(e.target.value); }} />
         </div>
         <ImageListItem key="Subheader" cols={2}>
-          <ListSubheader component="div">Laptops</ListSubheader>
+          <ListSubheader component="div">Tablets</ListSubheader>
         </ImageListItem>
         {items.filter((val) => {
           if (search == "") {
@@ -110,12 +101,6 @@ const Product  = (props) => {
       </ImageList>
     );
   }
-  const mapStateToProps = (state) =>{
-    return {
-      cart:state.cart
-  
-    }
-  } 
 
 
 export default Product;

@@ -9,6 +9,10 @@ import Form1 from './components/Admin/Form1';
 import ProductsDisplay from './components/Tablets/ProductsDisplay';
 import Cart from './components/Cart/Cart';
 import Footer from './components/Footer/Footer';
+import Currency2 from './components/Currency/Currency2';
+import TabletsProductDisplay from './components/Tablets/TabletsProductDisplay';
+import TestTableD from './components/Admin/TestTableD';
+import VisualData from './components/Data Visualization/VisualData';
 
   
 function App() {
@@ -25,6 +29,9 @@ function App() {
         <Route path='/allProducts' exact component={AllProducts} />
       </Switch>
       <Switch>
+        <Route path='/ipads' exact component={TabletsProductDisplay} />
+      </Switch>
+      <Switch>
         <Route path='/allProductsForm' exact component={Form1} />
       </Switch>
       <Switch>
@@ -32,6 +39,12 @@ function App() {
       </Switch>
       <Switch>
         <Route path='/checkout' exact component={Cart} />
+      </Switch>
+      <Switch>
+        <Route path='/Currency' exact component={Currency2} />
+      </Switch>
+      <Switch>
+        <Route path='/data' exact component={VisualData} />
       </Switch>
       <Footer/>
     </Router>

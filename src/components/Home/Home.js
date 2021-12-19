@@ -1,11 +1,15 @@
 import React, {useEffect} from 'react';
+import VisualData from '../Data Visualization/VisualData';
 import Carou from './Carou';
 import './Home.css'
+import { useDispatch } from 'react-redux';
 
-const Home = () => {
+const Home = (props) => {
+    const dispatch = useDispatch();
+
 
     useEffect(() => {
-        
+        dispatch({type:'RESET'})
         localStorage.clear();
     }, [])
 
@@ -21,11 +25,18 @@ const Home = () => {
             <div>
                 <Carou />
             </div>
+            
 
         </div>
 
     )
 };
+const mapStateToProps = (state) =>{
+    return {
+      cart:state.cart
+  
+    }
+  }  
 
 
 

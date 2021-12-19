@@ -5,6 +5,7 @@ import {useHistory } from "react-router-dom";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Axios from 'axios'
+import Dropdown from '../Reusable/Dropdown';
 
 const Form1 = () => {
 
@@ -14,12 +15,26 @@ const Form1 = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [status, setStatus] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [categoryName, setCategoryName] = useState([]);
 
   const history = useHistory();
 
   useEffect(()=>{
-    setStatus("")
+    loadCategories();
+    handleDropdown();
+    setStatus("");
   },[]);
+
+  const loadCategories= () =>{
+    Axios.get("http://localhost:3001/categories",{
+    }).then((res) => {
+      console.log(res);
+      setCategories(res?.data);
+      console.log(categories)
+  }
+  )
+  };
 
 
   const insertProduct = () => {
@@ -29,7 +44,8 @@ const Form1 = () => {
       image:image,
       name:name,
       description:description,
-      price:price
+      price:price,
+      categoryName: categoryName
     }).then((response) => {
         if(response.data.message){
           setStatus(response.data.message)
@@ -45,12 +61,15 @@ const Form1 = () => {
 
   const updateProduct = () => {
     try{
+      console.log(id);
     Axios.post("http://localhost:3001/update", {
       id: id,
       image:image,
       name:name,
       description:description,
-      price:price
+      price:price,
+      categoryName: categoryName
+      
   }).then((response) => {
       
     if(response.data.message){
@@ -73,7 +92,8 @@ const Form1 = () => {
       image:image,
       name:name,
       description:description,
-      price:price
+      price:price,
+      categoryName: categoryName
   }).then((response) => {
       
     if(response.data.message){
@@ -93,7 +113,12 @@ const selectedfile = () => {
   setStatus(image);
 }
 
+const handleDropdown = (categoryName) => {
+  setCategoryName(categoryName);
+  console.log(categoryName);
 
+  
+};
 
 
 
@@ -108,6 +133,9 @@ const selectedfile = () => {
   return (
     <div className="form">
       <form>
+      <div className="form">
+          <Dropdown data={categories} onChange={handleDropdown} value={categoryName} id="outlined-basic" label="Id" variant="outlined" />
+        </div>
         <div className="form">
           <TextField id="outlined-basic" label="Id" variant="outlined" onChange={(e) => { setId(e.target.value); }}/>
         </div>
